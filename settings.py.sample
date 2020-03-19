@@ -1,0 +1,38 @@
+
+dialer_port = 7001
+
+# Configuration of asterisk contexts
+outbound_context = "outgoing-nipo-preview"
+outbound_power_context = "outgoing-nipo-power"
+agent_context = "from-internal"
+queue_context = "outgoing-nipo-queue"
+default_dialer = ""
+default_language = "en"
+
+# Configuration of dialer copabilities sent to NIPO
+dialer_param_hr = 2;
+dialer_param_ka = 1;
+dialer_param_ii = 1;
+dialer_param_rc = 1;
+dialer_param_extlen = 3;
+dialer_call_limits = 10
+
+# Asterisk Manager interface configuration
+ami_host = '127.0.0.1'
+ami_user = 'AMINIPO'
+ami_secret = 'nipopwd'
+ami_port = 5038
+
+# Mysql server info
+mysql_host = "localhost"
+mysql_user = "dialeruser"
+mysql_pass = "dialermysqlpwd"
+mysql_dbname = "nipodialer"
+
+# Logging settings
+log_to_file = True
+log_file_path = '/var/log/nipodialer'
+sounds_file_path = 'custom'
+
+# Debug settings
+force_number = False

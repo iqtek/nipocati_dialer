@@ -1,0 +1,57 @@
+DROP TABLE IF EXISTS `realtime_queue`;
+CREATE TABLE IF NOT EXISTS `realtime_queue` (
+  `name` varchar(128) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `musiconhold` varchar(128) DEFAULT NULL,
+  `announce` varchar(128) DEFAULT NULL,
+  `context` varchar(128) DEFAULT NULL,
+  `timeout` int(11) DEFAULT '1',
+  `monitor_join` tinyint(1) DEFAULT '1',
+  `monitor_format` varchar(128) DEFAULT NULL,
+  `queue_youarenext` varchar(128) DEFAULT NULL,
+  `queue_thereare` varchar(128) DEFAULT NULL,
+  `queue_callswaiting` varchar(128) DEFAULT NULL,
+  `queue_holdtime` varchar(128) DEFAULT NULL,
+  `queue_minutes` varchar(128) DEFAULT NULL,
+  `queue_seconds` varchar(128) DEFAULT NULL,
+  `queue_lessthan` varchar(128) DEFAULT NULL,
+  `queue_thankyou` varchar(128) DEFAULT NULL,
+  `queue_reporthold` varchar(128) DEFAULT NULL,
+  `announce_frequency` int(11) DEFAULT NULL,
+  `announce_round_seconds` int(11) DEFAULT NULL,
+  `announce_holdtime` varchar(128) DEFAULT NULL,
+  `retry` int(11) DEFAULT '1',
+  `wrapuptime` int(11) DEFAULT NULL,
+  `maxlen` int(11) DEFAULT NULL,
+  `servicelevel` int(11) DEFAULT NULL,
+  `strategy` varchar(128) DEFAULT 'rrmemory',
+  `joinempty` varchar(128) DEFAULT NULL,
+  `leavewhenempty` varchar(128) DEFAULT NULL,
+  `eventmemberstatus` tinyint(1) DEFAULT NULL,
+  `eventwhencalled` varchar(128) DEFAULT 'vars',
+  `reportholdtime` tinyint(1) DEFAULT NULL,
+  `memberdelay` int(11) DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `timeoutrestart` tinyint(1) DEFAULT NULL,
+  `periodic_announce` varchar(50) DEFAULT NULL,
+  `periodic_announce_frequency` int(11) DEFAULT NULL,
+  `ringinuse` tinyint(1) DEFAULT '0',
+  `setinterfacevar` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `realtime_queue_member`;
+CREATE TABLE IF NOT EXISTS `realtime_queue_member` (
+  `uniqueid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `membername` varchar(40) DEFAULT NULL,
+  `member` varchar(40) DEFAULT NULL,
+  `queue_name` varchar(128) DEFAULT NULL,
+  `interface` varchar(128) DEFAULT NULL,
+  `state_interface` varchar(128) DEFAULT NULL,
+  `penalty` int(11) DEFAULT NULL,
+  `paused` int(11) DEFAULT '0',
+  PRIMARY KEY (`uniqueid`),
+  UNIQUE KEY `queue_interface` (`queue_name`,`interface`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

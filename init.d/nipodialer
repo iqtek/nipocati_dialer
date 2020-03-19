@@ -1,0 +1,58 @@
+#!/bin/bash
+# /etc/init.d/nipodialer
+
+### BEGIN INIT INFO
+# Provides:   nipodialer
+# Required-Start: $local_fs $remote_fs
+# Required-Stop:  $local_fs $remote_fs
+# Should-Start:   $network
+# Should-Stop:    $network
+# Default-Start:  2 3 4 5
+# Default-Stop:   0 1 6
+# Short-Description:    NIPO Asterisk dialer
+# Description:    This runs a script continuously in screen. 
+### END INIT INFO
+
+case "$1" in
+
+  start)
+        echo "Starting NIPO dialer"
+        screen -dm -S nipodialer /opt/nipodialer/nipo_dialer_server.sh
+        ;;
+  stop)
+        echo "Stopping NIPO dialer"
+        screen -X -S dialer quit
+        sleep 5
+        PID=`ps -ef | grep nipo_dialer_server.py | grep -v grep | awk '{print $2}'`
+        kill -9 $PID
+        screen -wipe
+        ;;
+
+  connect)
+        screen -r nipodialer
+        ;;
+
+  restart)
+        echo "Restarting $screen"
+        PID=`ps -ef | grep nipo_dialer_server.py | grep -v grep | awk '{print $2}'`
+        kill -9 $PID
+        screen -wipe 
+        sleep 5
+        screen -dm -S nipodialer /opt/nipodialer/nipo_dialer_server.sh
+        ;;
+
+  force-reload)
+        echo "Forcing restarting $screen"
+        PID=`ps -ef | grep nipo_dialer_server.py | grep -v grep | awk '{print $2}'`
+        kill -9 $PID 
+        screen -wipe
+        sleep 5
+        screen -dm -S nipodialer /opt/nipodialer/nipo_dialer_server.sh
+        ;;
+  *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+exit 0

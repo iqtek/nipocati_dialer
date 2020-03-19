@@ -1,0 +1,11 @@
+[Unit]
+Description=Dialer Daemons
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/screen -D -S dialerscreen -m /opt/nipodialer/nipo_dialer_server.sh
+ExecStop=/usr/bin/screen -S dialerscreen -X quit
+
+[Install]
+WantedBy=multi-user.target

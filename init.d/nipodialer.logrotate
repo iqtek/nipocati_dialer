@@ -1,0 +1,5 @@
+/var/log/nipodialer/messages {
+    missingok
+    daily
+    rotate 31
+}
